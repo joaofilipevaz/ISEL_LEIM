@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Restaurante>
+	<Ingredientes>
+		<ingrediente idIng = "I01">Porco</ingrediente>
+		<ingrediente idIng = "I02">Galinha</ingrediente>
+		<ingrediente idIng = "I03">Cogumelos</ingrediente>
+	</Ingredientes>
+	<Items>
+		<item idItem = "P01" tipo = "carne">
+			<item_nome>Bifanas</item_nome>
+			<ing refIdIngrediente = "I01">Porco</ing>
+		</item>
+		<item idItem = "P02" tipo = "carne">
+			<item_nome>Carnes Brancas</item_nome>
+			<ing refIdIngrediente = "I02">Galinha</ing>
+		</item>
+		<item idItem = "P03" tipo = "vegetais">
+			<item_nome>Vegetais</item_nome>
+			<ing refIdIngrediente = "I03">Cogumelos</ing>
+		</item>
+	</Items>
+	<Ementas>
+		<ementa id = "E01" refIdtem = "P01">
+			<nome lang = "PT-PT">Carne de Porco à Alentejana</nome>
+			<refItem refItem = "P01" preco = "20"/>
+		</ementa>
+		<ementa id = "E02" refIdtem = "P02">
+			<nome>Galinha à Camposena</nome>
+			<refItem refItem = "P02" preco = "20"/>
+		</ementa>
+		<ementa id = "E03" refIdtem = "P01">
+			<nome>Bifanas de Porco</nome>
+			<refItem refItem = "P01" preco = "15"/>
+		</ementa>
+		<ementa id = "E04" refIdtem = "P03">
+			<nome>Delicias de Cogumelos</nome>
+			<refItem refItem = "P03" preco = "30"/>
+		</ementa>
+	</Ementas>
+</Restaurante>
