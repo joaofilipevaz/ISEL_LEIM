@@ -6,8 +6,6 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-452
-
 # 1
 
 x_img = cv2.imread("lenac.tif")
