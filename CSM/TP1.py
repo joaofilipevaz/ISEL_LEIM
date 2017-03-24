@@ -33,11 +33,34 @@ cv2.imwrite('file2.jpg', x_img, (cv2.IMWRITE_JPEG_QUALITY, 10))
 Converta a imagem para níveis de cinzento, usando o método "cvtColor"e grave a imagem. Este método aplica
 a transformação Y = R∗299/1000+G∗587/1000+B ∗114/1000, justiﬁque a utilização desta equação. Veriﬁque
 também o tamanho do ﬁcheiro e compare-o com o ﬁcheiro original.
+
+R -
+A equação Y = R∗299/1000+G∗587/1000+B ∗114/1000 é conhecida como a "ITU-R 601-2 luma transform" e é um standard
+para a representação da luma, também conhecida pela letra Y. A luma representa o brilho de uma imagem,
+tipicamente representado a preto e branco e acromatico. O olho humano tem uma sensibilidade superior a luminancia do que
+relativamente às diferenças cromáticas.
+O calculo directo da luminancia obriga a analises espectrais particulares,
+outra forma de a intrepretar é atraves de uma soma ponderada dos componentes RGB.
+Analisando as 3 cores vermelho, verde e azul, e tendo elas a mesma radiancia no espectro visivel, entao o verde
+irá aparecer como a mais brilhante das tres já que a função de eficiencia de luminosidade (que nos fornece
+uma representação fiedigna da sensibilidade do olho humano à luminosidade) atinge o pico nesta gama do espectro de cores.
+O vermelho será menos brilhante e o azul o mais escuro dos tres. Os coeficientes são então uma função de cada componente
+espectral devidamente ponderado pela sensibilidade do olho humano. A origem destes coeficientes foi a de servir como referencia
+para a computação da luminancia nos monitores CRT introduzidos pela TV em 1953. Embora estes coeficientes sejam ainda adequados para
+o calculo da luma já nao reflectem a luminancia nos monitores comtemporaneos.
+Na realidade o tamanho do ficheiro é um terço do ficheiro original, este facto é explicado pelo facto da luma, ou Y, ser
+apenas um dos canais dos três que compoem o ficheiro, praticamente o que estamos a fazer é a suprimir a componente chromatica e
+a ficar apenas com a compoente da intensidade da luz.
+
 """
 
 x_img_g = cv2.cvtColor(x_img, cv2.COLOR_BGR2GRAY)
 cv2.imshow('Gray Image', x_img_g)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 cv2.imwrite('file3.bmp', x_img_g)
+
+
 
 # 4
 
