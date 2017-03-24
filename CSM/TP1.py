@@ -60,8 +60,6 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 cv2.imwrite('file3.bmp', x_img_g)
 
-
-
 # 4
 
 """
@@ -69,6 +67,11 @@ Apresente o histograma da imagem em tons de cizento, veriﬁque quantos níveis 
 """
 
 plt.hist(x_img_g.ravel(), 256, [0, 256])
+
+"""
+Os pixeis da imagem estão distribuidos entre os niveis de cinzento 30 e 230, sendo que os picos de distribuiçºao estão a
+volta dos niveis 50, 100 e 150. A imagem tem 256 niveis diferentes de cinzento.
+"""
 
 # 5
 
