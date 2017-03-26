@@ -27,6 +27,26 @@ qualidade das imagens assim como o tamanho do ﬁcheiro. Calcule a taxa de compr
 cv2.imwrite('file1.jpg', x_img, (cv2.IMWRITE_JPEG_QUALITY, 80))
 cv2.imwrite('file2.jpg', x_img, (cv2.IMWRITE_JPEG_QUALITY, 10))
 
+
+def SNR(img_original, img_transformada):
+    # colocar um for
+    Pplano0 = sum(img1[::0] ** 2) / len(img1[::0])
+    Pplano1 = sum(img1[::1] ** 2) / len(img1[::1])
+    Pplano2 = sum(img1[::2] ** 2) / len(img1[::2])
+    nPixeis =
+    Pimagem = (Pplano0 + Pplano1 + Pplano2) / nPixeis
+
+    erro = x_img - img1
+    # colocar um for
+    PEplano0 = sum(erro[::0] ** 2) / len(erro[::0])
+    PEplano1 = sum(erro[::1] ** 2) / len(erro[::1])
+    PEplano2 = sum(erro[::2] ** 2) / len(erro[::2])
+    nPixeis =
+    Perro = (PEplano0 + PEplano1 + PEplano2) / nPixeis
+    SNR = 10 * m.log10(Pimagem / Perro)  # SNR pratica
+
+    return SNR
+
 # 3
 
 """
@@ -99,3 +119,42 @@ cv2.imwrite('lena_4 .bmp', y)
 Crie uma função que apresente uma imagem (100 × 100) como se apresenta na ﬁgura. O ângulo de cada sector
 é dado por parâmetro passado à função (o ângulo é um valor inteiro entre 0 e 360 graus).
 """
+
+#7 -> criar um array a branco arr=np.ones((4,4))*255
+#  -> calcular o angulo com alpha=np.arctan(y/x.)*180/np.pi
+#  ->
+#  ->
+
+def create_blank(width, height, rgb_fundo=(0, 0, 0), rgb_cor=(0, 0, 0)):
+    # Create black blank image
+    image = np.ones((height, width, 3), np.uint8)
+    # Since OpenCV uses BGR, convert the color first
+    color = tuple(reversed(rgb_fundo))
+    # Fill image with color
+    image[:] = color
+    #alpha = np.arctan(250 / 5) * 180 / np.pi
+    Thickness = 1
+
+    y = 0
+    while y <= 500:
+        cv2.line(image, (width/2, height/2), (width, y), rgb_cor, Thickness)
+        cv2.line(image, (width/2, height/2), (0, y), rgb_cor, Thickness)
+        y += 10
+    x = 0
+    while x <= 500:
+        cv2.line(image, (width/2, height/2), (x, 0), rgb_cor, Thickness)
+        cv2.line(image, (width/2, height/2), (x, height), rgb_cor, Thickness)
+        x += 10
+
+    return image
+
+width, height = 500, 500
+branco = (255, 255, 255)
+preto = (0, 0, 0)
+
+
+image = create_blank(width, height, branco, preto)
+cv2.imshow('Invencao', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+#cv2.imwrite('test.jpg', image)
