@@ -27,25 +27,25 @@ qualidade das imagens assim como o tamanho do ﬁcheiro. Calcule a taxa de compr
 cv2.imwrite('file1.jpg', x_img, (cv2.IMWRITE_JPEG_QUALITY, 80))
 cv2.imwrite('file2.jpg', x_img, (cv2.IMWRITE_JPEG_QUALITY, 10))
 
-
-def SNR(img_original, img_transformada):
-    # colocar um for
-    Pplano0 = sum(img1[::0] ** 2) / len(img1[::0])
-    Pplano1 = sum(img1[::1] ** 2) / len(img1[::1])
-    Pplano2 = sum(img1[::2] ** 2) / len(img1[::2])
-    nPixeis =
-    Pimagem = (Pplano0 + Pplano1 + Pplano2) / nPixeis
-
-    erro = x_img - img1
-    # colocar um for
-    PEplano0 = sum(erro[::0] ** 2) / len(erro[::0])
-    PEplano1 = sum(erro[::1] ** 2) / len(erro[::1])
-    PEplano2 = sum(erro[::2] ** 2) / len(erro[::2])
-    nPixeis =
-    Perro = (PEplano0 + PEplano1 + PEplano2) / nPixeis
-    SNR = 10 * m.log10(Pimagem / Perro)  # SNR pratica
-
-    return SNR
+#
+# def SNR(img_original, img_transformada):
+#     # colocar um for
+#     Pplano0 = sum(img1[::0] ** 2) / len(img1[::0])
+#     Pplano1 = sum(img1[::1] ** 2) / len(img1[::1])
+#     Pplano2 = sum(img1[::2] ** 2) / len(img1[::2])
+#     nPixeis =
+#     Pimagem = (Pplano0 + Pplano1 + Pplano2) / nPixeis
+#
+#     erro = x_img - img1
+#     # colocar um for
+#     PEplano0 = sum(erro[::0] ** 2) / len(erro[::0])
+#     PEplano1 = sum(erro[::1] ** 2) / len(erro[::1])
+#     PEplano2 = sum(erro[::2] ** 2) / len(erro[::2])
+#     nPixeis =
+#     Perro = (PEplano0 + PEplano1 + PEplano2) / nPixeis
+#     SNR = 10 * m.log10(Pimagem / Perro)  # SNR pratica
+#
+#     return SNR
 
 # 3
 
@@ -101,8 +101,28 @@ se transformar a imagem para um array. O código seguinte representa o pixel mai
 Apresente oito imagens, cada uma com o valor de cada bit para todos os pixeis.
 """
 
-y = x_img_g > 128
-cv2.imshow('BW', y*1.0)
+def bitvalue(img_g):
+    #array com o valor de cada bit
+    bits = [1,2,4,8,16,32,64,128]
+    # numero de colunas e linhas do array bidimensional
+    cols = len(img_g)
+    rows = len(img_g[0])
+    #itera cada bit
+    for i in range(len(bits)):
+        #em cada bit cria uma imagem para representar o plano de bits
+        y = np.zeros((cols, rows), dtype=np.uint8)
+        #itera nas linhas e colunas
+        for z in range(len(img_g)):
+            for t in range(len(img_g[z])):
+                #avalia a expressão binaria em 8 bits para saber se o bit esta activo
+                if '{0:08b}'.format(img_g[z][t])[7-i] == '1':
+                    # se o bit esta activo o pixel é guardado com o valor respectivo
+                    y[z][t] = bits[i]
+        cv2.imshow('Bit Plane - bit %i' % i, y * 1.0)
+        cv2.imwrite('Bit Plane - bit %i.bmp' % i, img_g)
+
+
+bitvalue(x_img_g)
 
 # 6
 
@@ -110,8 +130,27 @@ cv2.imshow('BW', y*1.0)
 Grave uma imagem que contém apenas a informação dos 4 bits mais signiﬁcantes da imagem.
 """
 
-# y= . . .
-cv2.imwrite('lena_4 .bmp', y)
+def mostSigBits(img_g):
+    #array com o valor de cada bit
+    bits = [1,2,4,8,16,32,64,128]
+    # numero de colunas e linhas do array bidimensional
+    cols = len(img_g)
+    rows = len(img_g[0])
+    # array de destino iniciado a zeros
+    y = np.zeros((cols, rows), dtype=np.uint8)
+    #itera os 4 bits mais significantes
+    for i in range(len(bits) / 2, len(bits)):
+        #itera a imagem nas linhas e colunas
+        for z in range(len(img_g)):
+            for t in range(len(img_g[z])):
+                #avalia a expressão binaria em 8 bits para saber se o bit esta activo
+                if '{0:08b}'.format(img_g[z][t])[7-i] == '1':
+                    # se o bit esta activo o valor do bit é adicionado ao pixel
+                    y[z][t] += bits[i]
+    cv2.imshow('Imagem com os 4 bits mais significativos', y)
+    cv2.imwrite('4bitsig.bmp', img_g)
+
+mostSigBits(x_img_g)
 
 # 7
 
